@@ -1,0 +1,5 @@
+## Remove build folder
+build/*
+/build/*
+
+
