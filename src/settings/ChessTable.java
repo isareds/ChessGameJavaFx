@@ -11,7 +11,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 
 /**
@@ -139,21 +138,38 @@ public class ChessTable{
                     }
                 });
                 */
-                if(row == 2){
+                
+                ImageView imageView = new ImageView();
+                
+                imageView.setId(stringRow + "," + stringColumn);
+                
+                imageView.setOnMousePressed(new EventHandler<MouseEvent>(){
+                    @Override
+                    public void handle(MouseEvent event) {
+                        System.out.println("Clicked Image");
+                        System.out.println("Pawn id: " + imageView.getId());
+                    }                  
+                });
+                
+                
+                if(row >= 1 && row <= 2){
                     Image pawn = ChessPawn.setPawnRoleBaseOnCoordinates(row, column);
-                    ImageView imageView = new ImageView(pawn);
+                    imageView.setImage(pawn);
+                    
                     imageView.fitWidthProperty().bind(square.widthProperty());
                     imageView.fitHeightProperty().bind(square.heightProperty());
                     
                     stackPane.getChildren().addAll(square,imageView);
-                }else if(row == 7){
+                }else if(row >= 7 && row <= 8){
                     Image pawn = ChessPawn.setPawnRoleBaseOnCoordinates(row, column);
-                    ImageView imageView = new ImageView(pawn);
+                    imageView.setImage(pawn);
+                    
                     imageView.fitWidthProperty().bind(square.widthProperty());
                     imageView.fitHeightProperty().bind(square.heightProperty());
                     
                     stackPane.getChildren().addAll(square,imageView);
                 }else{
+                    
                     stackPane.getChildren().addAll(square);
                     square.setEmptyBox(true);
                 }

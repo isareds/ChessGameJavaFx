@@ -9,7 +9,6 @@ import javafx.scene.image.Image;
 import java.nio.file.Paths;
 import java.nio.file.Path;
 
-import util.ChessUtil;
 
 /**
  *
@@ -25,33 +24,86 @@ public class ChessPawn {
         
         Path currentRelativePath = Paths.get("");
         String s = currentRelativePath.toAbsolutePath().toString();
-        System.out.println("Current relative path is: " + s);
         
         String preUrl = "file:///";
         String urlWithoutPawnName = preUrl + s +  "/resources/images/";
         
-        System.out.println("Url without pawn name: " + urlWithoutPawnName);
-        
         if( x >= 1 && x <=2) {
-            System.out.println("Sono qui 1");
+           
             switch(x){
-                case 2 : url = urlWithoutPawnName + "pedone-white.png"; System.out.println("Case 2"); break;
-                default: System.out.println("Deafault case"); break;
+                case 1:{
+
+                    switch(y){
+                        case 1:
+                            url = urlWithoutPawnName + "torre-white.png"; 
+                            break;
+                        case 8:
+                            url = urlWithoutPawnName + "torre-white.png"; 
+                            break;
+                        case 2:
+                            url = urlWithoutPawnName + "cavallo-white.png"; 
+                            break;
+                        case 7:
+                            url = urlWithoutPawnName + "cavallo-white.png"; 
+                            break;
+                        case 3:
+                            url = urlWithoutPawnName + "alfiere-white.png"; 
+                            break;
+                        case 6:
+                            url = urlWithoutPawnName + "alfiere-white.png"; 
+                            break;
+                        case 4:
+                            url = urlWithoutPawnName + "king-white.png"; 
+                            break;
+                        case 5:
+                            url = urlWithoutPawnName + "queen-white.png"; 
+                            break;
+                    }
+                    break;
+                }
+                
+                case 2 : url = urlWithoutPawnName + "pedone-white.png"; break;
             }
         }else if( x >= 7 && x <= 8){
-            System.out.println("sono qui 2");
+            
             switch(x){
-                case 7 : url = urlWithoutPawnName + "pedone-black.png"; System.out.println("case 7"); break;
-                default: System.out.println("second default case"); break;
+                case 8:{
+                    
+                    switch(y){
+                        case 1:
+                            url = urlWithoutPawnName + "torre-black.png"; 
+                            break;
+                        case 8:
+                            url = urlWithoutPawnName + "torre-black.png"; 
+                            break;
+                        case 2:
+                            url = urlWithoutPawnName + "cavallo-black.png"; 
+                            break;
+                        case 7:
+                            url = urlWithoutPawnName + "cavallo-black.png"; 
+                            break;
+                        case 3:
+                            url = urlWithoutPawnName + "alfiere-black.png"; 
+                            break;
+                        case 6:
+                            url = urlWithoutPawnName + "alfiere-black.png"; 
+                            break;
+                        case 4:
+                            url = urlWithoutPawnName + "king-black.png"; 
+                            break;
+                        case 5:
+                            url = urlWithoutPawnName + "queen-black.png"; 
+                            break;
+                    }
+                    break;
+                }
+                case 7 : url = urlWithoutPawnName + "pedone-black.png"; break;
             }
         }else{
-            System.out.println("sono nell'else");
+            throw new Error("No imaage found");
         }
         
         pawn = new Image(url);
-        System.out.println("Immagine caricata");
-        
         return pawn;
     }
-    
 }
