@@ -10,15 +10,20 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import settings.ChessMenu;
+import settings.ChessPawn;
 import settings.ChessTable;
 
 /**
@@ -30,9 +35,7 @@ public class GridPaneExample extends Application {
     @Override
     public void start(Stage primaryStage) {
         Button btn = new Button();
-        btn.setText("Create Grid");
-        
-        TextField gridSizeInputField = new TextField();
+        btn.setText("Start Game");
         
         btn.setOnAction(new EventHandler<ActionEvent>() {
             
@@ -49,8 +52,6 @@ public class GridPaneExample extends Application {
                 chessTable.setBoxesColor(chessMenu.getOddBoxColor(), chessMenu.getPeerBoxColor());
                 
                 GridPane rootGridPane = chessTable.generateChessTable();
-
-                Text logInfo = new Text();
                 
                 VBox rootPane = new VBox();
                 rootPane.getChildren().addAll(menuBar,rootGridPane);
@@ -68,12 +69,30 @@ public class GridPaneExample extends Application {
             }
         });
         
+        Button imageViewTmp = new Button("Prova di imageView");
+        imageViewTmp.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Stage imageStage = new Stage();
+                
+                Image image = ChessPawn.setPawnRoleBaseOnCoordinates(2,1);
+                ImageView imageView = new ImageView(image);
+                
+                StackPane root = new StackPane();
+                root.getChildren().add(imageView);
+                
+                Scene imageScene = new Scene(root);
+                imageStage.setScene(imageScene);
+                imageStage.show();
+            }
+        });
+        
         VBox root = new VBox();
         
         root.setPadding(new Insets(50));
         root.setAlignment(Pos.CENTER);
         root.setSpacing(10);
-        root.getChildren().addAll(gridSizeInputField, btn);
+        root.getChildren().addAll(btn,imageViewTmp);
         
         Scene scene = new Scene(root, 300, 250);
         

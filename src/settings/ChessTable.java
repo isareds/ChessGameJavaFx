@@ -7,6 +7,8 @@ package settings;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
@@ -36,8 +38,9 @@ public class ChessTable{
         
         rootGridPane.setGridLinesVisible(true);
         rootGridPane.setAlignment(Pos.CENTER);
-        rootGridPane.setPrefSize(600,600);
-        rootGridPane.setMaxSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+        rootGridPane.setPrefSize(650, 650);
+        //rootGridPane.setMaxSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+        rootGridPane.setMaxSize(700, 700);
         
         
         for(int row = 1; row <= GRID_SIZE_VALUE; row++){
@@ -70,9 +73,13 @@ public class ChessTable{
                 ChessRectangle square = new ChessRectangle();
                 square.setId(stringColumn + ":" + stringRow);
                 square.setFill(squareBackgroundColor);
+                square.setHeight(75);
+                square.setWidth(75);
+                /*
                 square.widthProperty().bind(rootGridPane.widthProperty().divide(GRID_SIZE_VALUE));
                 square.heightProperty().bind(rootGridPane.heightProperty().divide(GRID_SIZE_VALUE));
-
+                */
+                
                 square.setOnMousePressed(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event1) {
@@ -87,7 +94,8 @@ public class ChessTable{
                         }
                      }
                 });
-                
+
+                /*
                 ChessCircle  pawn = new ChessCircle();
                 pawn.setCenterX(0);
                 pawn.setCenterY(0);
@@ -130,12 +138,21 @@ public class ChessTable{
                         
                     }
                 });
-                
-                if(row>= 1 && row<= 2){
-                    stackPane.getChildren().addAll(square,pawn);
-                }else if(row >= 7 && row <= 8){
-                    pawn.setFill(Color.GREY);
-                    stackPane.getChildren().addAll(square,pawn);
+                */
+                if(row == 2){
+                    Image pawn = ChessPawn.setPawnRoleBaseOnCoordinates(row, column);
+                    ImageView imageView = new ImageView(pawn);
+                    imageView.fitWidthProperty().bind(square.widthProperty());
+                    imageView.fitHeightProperty().bind(square.heightProperty());
+                    
+                    stackPane.getChildren().addAll(square,imageView);
+                }else if(row == 7){
+                    Image pawn = ChessPawn.setPawnRoleBaseOnCoordinates(row, column);
+                    ImageView imageView = new ImageView(pawn);
+                    imageView.fitWidthProperty().bind(square.widthProperty());
+                    imageView.fitHeightProperty().bind(square.heightProperty());
+                    
+                    stackPane.getChildren().addAll(square,imageView);
                 }else{
                     stackPane.getChildren().addAll(square);
                     square.setEmptyBox(true);

@@ -6,70 +6,52 @@
 package settings;
 
 import javafx.scene.image.Image;
+import java.nio.file.Paths;
+import java.nio.file.Path;
+
 import util.ChessUtil;
 
 /**
  *
  * @author newto
  */
-public class ChessPawn extends Image implements ChessUtil{
+public class ChessPawn {
     
-    private int x,y;
-    
-    
-    public ChessPawn(String url) {
-        super(url);
-    }
-
-    public ChessPawn(String url, int x, int y){
-        super(url);
-        this.x = x;
-        this.y = y;
-    }
 
         
-    private String setRoleBaseOnCoordinates(){
+    public static Image setPawnRoleBaseOnCoordinates(int x, int y){
+        Image pawn = null;
         String url = null;
         
-        if( this.x >= 1 && this.x <=2){
+        Path currentRelativePath = Paths.get("");
+        String s = currentRelativePath.toAbsolutePath().toString();
+        System.out.println("Current relative path is: " + s);
+        
+        String preUrl = "file:///";
+        String urlWithoutPawnName = preUrl + s +  "/resources/images/";
+        
+        System.out.println("Url without pawn name: " + urlWithoutPawnName);
+        
+        if( x >= 1 && x <=2) {
+            System.out.println("Sono qui 1");
             switch(x){
-                case 2 : url = "./images/pedone-white.svg";
+                case 2 : url = urlWithoutPawnName + "pedone-white.png"; System.out.println("Case 2"); break;
+                default: System.out.println("Deafault case"); break;
             }
+        }else if( x >= 7 && x <= 8){
+            System.out.println("sono qui 2");
+            switch(x){
+                case 7 : url = urlWithoutPawnName + "pedone-black.png"; System.out.println("case 7"); break;
+                default: System.out.println("second default case"); break;
+            }
+        }else{
+            System.out.println("sono nell'else");
         }
         
-        return url;
+        pawn = new Image(url);
+        System.out.println("Immagine caricata");
+        
+        return pawn;
     }
     
-    
-    @Override
-    public void setCoordinates(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    @Override
-    public String getCoordinates() {
-        return "(" + this.x + "," + this.y + ")";
-    }
-
-    @Override
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    @Override
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    @Override
-    public int getX() {
-        return this.x;
-    }
-
-    @Override
-    public int getY() {
-        return this.y;
-    }
-   
 }
