@@ -5,105 +5,75 @@
  */
 package settings;
 
-import javafx.scene.image.Image;
-import java.nio.file.Paths;
-import java.nio.file.Path;
-
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 
 /**
  *
  * @author newto
  */
-public class ChessPawn {
+public class ChessPawn extends ImageView {
+
+    private int x,y;
     
+    private boolean selectForMovement;
+    
+    
+    public ChessPawn(int x, int y){
+        setCoordinates(x, y);
+    }
+    
+    private void setCoordinates(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
 
-        
-    public static Image setPawnRoleBaseOnCoordinates(int x, int y){
-        Image pawn = null;
-        String url = null;
-        
-        Path currentRelativePath = Paths.get("");
-        String s = currentRelativePath.toAbsolutePath().toString();
-        
-        String preUrl = "file:///";
-        String urlWithoutPawnName = preUrl + s +  "/resources/images/";
-        
-        if( x >= 1 && x <=2) {
-           
-            switch(x){
-                case 1:{
+    public String getCoordinates() {
+        return "(" + this.x + "," + this.y + ")";
+    }
 
-                    switch(y){
-                        case 1:
-                            url = urlWithoutPawnName + "torre-white.png"; 
-                            break;
-                        case 8:
-                            url = urlWithoutPawnName + "torre-white.png"; 
-                            break;
-                        case 2:
-                            url = urlWithoutPawnName + "cavallo-white.png"; 
-                            break;
-                        case 7:
-                            url = urlWithoutPawnName + "cavallo-white.png"; 
-                            break;
-                        case 3:
-                            url = urlWithoutPawnName + "alfiere-white.png"; 
-                            break;
-                        case 6:
-                            url = urlWithoutPawnName + "alfiere-white.png"; 
-                            break;
-                        case 4:
-                            url = urlWithoutPawnName + "king-white.png"; 
-                            break;
-                        case 5:
-                            url = urlWithoutPawnName + "queen-white.png"; 
-                            break;
-                    }
-                    break;
-                }
-                
-                case 2 : url = urlWithoutPawnName + "pedone-white.png"; break;
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getXCoordinate() {
+        return this.x;
+    }
+
+    public int getYCoordinate() {
+       return this.y;
+    }
+    
+    public void selectForMovement(){
+        this.selectForMovement = true;
+        
+        super.setOpacity(0.7);
+    }
+    
+    public void setChessPawnParentEmpty(){
+        ChessStackPane parent = (ChessStackPane) super.getParent();
+        ObservableList<Node> child = parent.getChildren();
+        
+        for(Node node : child){
+            if(node instanceof ChessRectangle){
+               //parent.getChildren().remove(1);
+               ((ChessRectangle) node).setEmptyBox(true);
+                System.out.println("Fatto");
             }
-        }else if( x >= 7 && x <= 8){
-            
-            switch(x){
-                case 8:{
-                    
-                    switch(y){
-                        case 1:
-                            url = urlWithoutPawnName + "torre-black.png"; 
-                            break;
-                        case 8:
-                            url = urlWithoutPawnName + "torre-black.png"; 
-                            break;
-                        case 2:
-                            url = urlWithoutPawnName + "cavallo-black.png"; 
-                            break;
-                        case 7:
-                            url = urlWithoutPawnName + "cavallo-black.png"; 
-                            break;
-                        case 3:
-                            url = urlWithoutPawnName + "alfiere-black.png"; 
-                            break;
-                        case 6:
-                            url = urlWithoutPawnName + "alfiere-black.png"; 
-                            break;
-                        case 4:
-                            url = urlWithoutPawnName + "king-black.png"; 
-                            break;
-                        case 5:
-                            url = urlWithoutPawnName + "queen-black.png"; 
-                            break;
-                    }
-                    break;
-                }
-                case 7 : url = urlWithoutPawnName + "pedone-black.png"; break;
-            }
-        }else{
-            throw new Error("No imaage found");
         }
-        
-        pawn = new Image(url);
-        return pawn;
+    }
+    
+    public void abortMovementOperation(){
+        super.setOpacity(0.0);
+        this.selectForMovement = false;
+    } 
+    
+    public boolean isSelectForMovement(){
+        return this.selectForMovement;
     }
 }

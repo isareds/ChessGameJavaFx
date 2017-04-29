@@ -5,10 +5,11 @@
  */
 package settings;
 
+import util.PawnsSettings;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -87,87 +88,82 @@ public class ChessTable{
                         System.out.println(" " + square.isEmpty());
                         
                         if(rootGridPane.isInMovementModality() && square.isEmpty()){
-                            ChessCircle selectedCircle = rootGridPane.getMovingObject(); 
-                            selectedCircle.setCircleParentAnEmptyBox();
-                            stackPane.getChildren().add(selectedCircle);
+                            //ChessPawn selectedPawn = rootGridPane.getMovingObject();
+                            //selectedPawn.setChessPawnParentEmpty();
+                            
+                            Node node = square.getParent();
+                            if(node instanceof ChessStackPane){
+                                System.out.println("è un instanza");
+                                ((ChessStackPane) node).getChildren().add(rootGridPane.getMovingObject());
+                                rootGridPane.getMovingObject().abortMovementOperation();
+                                System.out.println(rootGridPane.getMovingObject().getImage());
+                            }else{
+                                System.out.println(node);
+                            }
+                            
+                            rootGridPane.stopMovement();
                         }
                      }
                 });
 
-                /*
-                ChessCircle  pawn = new ChessCircle();
-                pawn.setCenterX(0);
-                pawn.setCenterY(0);
-                pawn.setRadius(25);
-                pawn.setFill(Color.BLACK);
-                pawn.setId(stringColumn + "," + stringRow);
-                pawn.setCoordinates(row, column);
-                pawn.setOnMousePressed(new EventHandler<MouseEvent>(){
+                
+                ChessPawn chessPawn = new ChessPawn(row, column);
+                
+                chessPawn.setId(stringRow + "," + stringColumn);
+                chessPawn.setOnMousePressed(new EventHandler<MouseEvent>(){
                     @Override
                     public void handle(MouseEvent event) {
-                        System.out.print("Clicked Circle->");
-                        System.out.println("" + pawn.getId());
+                        System.out.print("Clicked Pawn->");
+                        System.out.println("" + chessPawn.getId());
                         
                         if(rootGridPane.isInMovementModality()){
                             System.out.println("Condition");
                             String alreadySelectedObject = rootGridPane.getMovingObjectId();
                             
                             System.out.println("Already selected object: " + alreadySelectedObject);
-                            System.out.println("Pawn id: " + pawn.getId());
+                            System.out.println("Pawn id: " + chessPawn.getId());
                             
-                            if(alreadySelectedObject == pawn.getId()){
-                                System.out.println("ugualianza");
-                                pawn.selectForMovement();
+                            if(alreadySelectedObject == chessPawn.getId()){
+                                
+                                chessPawn.abortMovementOperation();
+                                rootGridPane.stopMovement();
                                 
                             }else{
                                
                                 rootGridPane.getMovingObject().abortMovementOperation();
-                                rootGridPane.setMovingObject(pawn);
-                                rootGridPane.setMovingObjectId(pawn.getId());
+                                rootGridPane.setMovingObject(chessPawn);
+                                rootGridPane.setMovingObjectId(chessPawn.getId());
                                 
-                                pawn.selectForMovement();
+                                chessPawn.selectForMovement();
                             }
                         }else{
+                
                             rootGridPane.setInMovementModality();
-                            rootGridPane.setMovingObjectId(pawn.getId());
-                            rootGridPane.setMovingObject(pawn);
+                            rootGridPane.setMovingObjectId(chessPawn.getId());
+                            rootGridPane.setMovingObject(chessPawn);
                             
-                            pawn.selectForMovement();
+                            chessPawn.selectForMovement();
                         }
-                        
                     }
-                });
-                */
-                
-                ImageView imageView = new ImageView();
-                
-                imageView.setId(stringRow + "," + stringColumn);
-                
-                imageView.setOnMousePressed(new EventHandler<MouseEvent>(){
-                    @Override
-                    public void handle(MouseEvent event) {
-                        System.out.println("Clicked Image");
-                        System.out.println("Pawn id: " + imageView.getId());
-                    }                  
                 });
                 
                 
                 if(row >= 1 && row <= 2){
-                    Image pawn = ChessPawn.setPawnRoleBaseOnCoordinates(row, column);
-                    imageView.setImage(pawn);
+                    Image pawn = PawnsSettings.setPawnRoleBaseOnCoordinates(row, column);
+                    chessPawn.setImage(pawn);
                     
-                    imageView.fitWidthProperty().bind(square.widthProperty());
-                    imageView.fitHeightProperty().bind(square.heightProperty());
+                    chessPawn.fitWidthProperty().bind(square.widthProperty());
+                    chessPawn.fitHeightProperty().bind(square.heightProperty());
                     
-                    stackPane.getChildren().addAll(square,imageView);
+                    stackPane.getChildren().addAll(square,chessPawn);
                 }else if(row >= 7 && row <= 8){
-                    Image pawn = ChessPawn.setPawnRoleBaseOnCoordinates(row, column);
-                    imageView.setImage(pawn);
+                    Image pawn = PawnsSettings.setPawnRoleBaseOnCoordinates(row, column);
+                    chessPawn.setImage(pawn);
                     
-                    imageView.fitWidthProperty().bind(square.widthProperty());
-                    imageView.fitHeightProperty().bind(square.heightProperty());
+                    chessPawn.fitWidthProperty().bind(square.widthProperty());
+                    chessPawn.fitHeightProperty().bind(square.heightProperty());
                     
-                    stackPane.getChildren().addAll(square,imageView);
+                    stackPane.getChildren().addAll(square,chessPawn);
                 }else{
                     
                     stackPane.getChildren().addAll(square);

@@ -5,6 +5,7 @@
  */
 package settings;
 
+import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
 
 /**
@@ -25,4 +26,5 @@ public class ChessRectangle extends Rectangle {
     public void setEmptyBox(boolean emptyBox) {
         this.emptyBox = emptyBox;
     }
+   
 }

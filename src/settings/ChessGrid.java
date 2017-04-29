@@ -17,7 +17,7 @@ public class ChessGrid extends GridPane {
     
     
     private boolean mode = false;
-    private ChessCircle movingObject;
+    private ChessPawn movingObject;
     private String movingObjectId;
     
     public void setInMovementModality(){
@@ -53,11 +53,18 @@ public class ChessGrid extends GridPane {
         return (ChessCircle) result;
     }
 
-    public void setMovingObject(ChessCircle movingObject) {
+    public void setMovingObject(ChessPawn movingObject) {
         this.movingObject = movingObject;
     }
     
-    public ChessCircle getMovingObject(){
+    public ChessPawn getMovingObject(){
         return this.movingObject;
+    }
+    
+    public void stopMovement(){
+        this.movingObject = null;
+        this.movingObjectId = null;
+        this.mode = false;
+        System.out.println("Fine del movimento");
     }
 }

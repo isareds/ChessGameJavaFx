@@ -20,7 +20,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import settings.ChessMenu;
-import settings.ChessPawn;
+import util.PawnsSettings;
 import settings.ChessTable;
 
 /**
@@ -72,7 +72,7 @@ public class GridPaneExample extends Application {
             public void handle(ActionEvent event) {
                 Stage imageStage = new Stage();
                 
-                Image image = ChessPawn.setPawnRoleBaseOnCoordinates(2,1);
+                Image image = PawnsSettings.setPawnRoleBaseOnCoordinates(2,1);
                 ImageView imageView = new ImageView(image);
                 
                 StackPane root = new StackPane();
