@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 /**
@@ -88,13 +89,13 @@ public class ChessTable{
                         System.out.println(" " + square.isEmpty());
                         
                         if(rootGridPane.isInMovementModality() && square.isEmpty()){
-                            //ChessPawn selectedPawn = rootGridPane.getMovingObject();
-                            //selectedPawn.setChessPawnParentEmpty();
-                            
+
                             Node node = square.getParent();
+                            
                             if(node instanceof ChessStackPane){
                                 System.out.println("è un instanza");
-                                ((ChessStackPane) node).getChildren().add(rootGridPane.getMovingObject());
+                                rootGridPane.getMovingObject().setChessPawnParentEmpty();
+                                ((Pane) node).getChildren().add(rootGridPane.getMovingObject());
                                 rootGridPane.getMovingObject().abortMovementOperation();
                                 System.out.println(rootGridPane.getMovingObject().getImage());
                             }else{
@@ -117,13 +118,12 @@ public class ChessTable{
                         System.out.println("" + chessPawn.getId());
                         
                         if(rootGridPane.isInMovementModality()){
-                            System.out.println("Condition");
-                            String alreadySelectedObject = rootGridPane.getMovingObjectId();
+                            String alreadySelectedObject_ID = rootGridPane.getMovingObjectId();
                             
-                            System.out.println("Already selected object: " + alreadySelectedObject);
+                            System.out.println("Already selected object: " + alreadySelectedObject_ID);
                             System.out.println("Pawn id: " + chessPawn.getId());
                             
-                            if(alreadySelectedObject == chessPawn.getId()){
+                            if(alreadySelectedObject_ID.equals(chessPawn.getId())){
                                 
                                 chessPawn.abortMovementOperation();
                                 rootGridPane.stopMovement();

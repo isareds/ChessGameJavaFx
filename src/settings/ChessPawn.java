@@ -61,15 +61,15 @@ public class ChessPawn extends ImageView {
         
         for(Node node : child){
             if(node instanceof ChessRectangle){
-               //parent.getChildren().remove(1);
                ((ChessRectangle) node).setEmptyBox(true);
-                System.out.println("Fatto");
+                System.out.println("Il padre dell'oggetto in movimento ora è settato a vuoto");
             }
         }
     }
     
     public void abortMovementOperation(){
-        super.setOpacity(0.0);
+        System.out.println(this + " abortito il movimento");
+        super.setOpacity(1.0);
         this.selectForMovement = false;
     } 
     

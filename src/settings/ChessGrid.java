@@ -50,7 +50,7 @@ public class ChessGrid extends GridPane {
             }
         }
         
-        return (ChessCircle) result;
+        return result;
     }
 
     public void setMovingObject(ChessPawn movingObject) {
